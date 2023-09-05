@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../screens/DetailImageScreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Page2 extends StatefulWidget {
   const Page2({super.key});
@@ -15,16 +18,24 @@ class _Page2State extends State<Page2> {
   String? selectedValue;
   List<Map<String, dynamic>> listImage = [
     {
-      "imageUrl": "assets/images/EXIT T1.jpg",
+      "imageUrl":
+          "https://vietnamairport.vn/uploads/catbiairport/users/b76bf447e8e87c870032/images/EXIT%20T1.jpg",
       "name": "Sơ đồ lối thoát hiểm tầng 1"
     },
     {
-      "imageUrl": "assets/images/EXIT T2.jpg",
+      "imageUrl":
+          "https://vietnamairport.vn/uploads/catbiairport/users/b76bf447e8e87c870032/images/EXIT%20T2.jpg",
       "name": "Sơ đồ lối thoát hiểm tầng 2"
     },
-    {"imageUrl": "assets/images/TERMINAL.jpg", "name": "TERMINAL"},
+    {
+      "imageUrl":
+          "https://vietnamairport.vn/uploads/catbiairport/users/b76bf447e8e87c870032/images/TERMINAL.jpg",
+      "name": "TERMINAL"
+    },
   ];
   List<Map<String, dynamic>> listImage2 = [];
+  static final customCacheManager = CacheManager(Config('customCacheKey',
+      stalePeriod: const Duration(days: 15), maxNrOfCacheObjects: 100));
   @override
   void initState() {
     super.initState();
@@ -101,10 +112,22 @@ class _Page2State extends State<Page2> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Column(children: [
-                    Image.asset(
-                      listImage2[index]["imageUrl"],
+                    CachedNetworkImage(
+                      key: UniqueKey(),
+                      height: 200,
+                      cacheManager: customCacheManager,
+                      imageUrl: listImage2[index]["imageUrl"],
+                      width: double.infinity,
                       fit: BoxFit.cover,
-                      width: size,
+                      placeholder: (context, url) {
+                        return Shimmer.fromColors(
+                            baseColor: const Color.fromARGB(255, 179, 177, 177),
+                            highlightColor:
+                                const Color.fromARGB(255, 223, 219, 219),
+                            child: Container(
+                              color: Colors.grey[200],
+                            ));
+                      },
                     ),
                     Text(
                       listImage2[index]["name"],
