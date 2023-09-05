@@ -79,9 +79,8 @@ class _DetailImageScreenState extends State<DetailImageScreen> {
                               }
                             },
                             maxScale: 5,
-                            child: Image.asset(
+                            child: Image.network(
                               widget.list[index]["imageUrl"],
-                              // height: orientation=="landscape"? MediaQuery.of(context).size.height*0.7:,
                               height: MediaQuery.of(context).size.height * 0.6,
                             ),
                           ),
