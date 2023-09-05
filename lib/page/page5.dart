@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+
+class Page5 extends StatefulWidget {
+  const Page5({super.key});
+
+  @override
+  State<Page5> createState() => _Page5State();
+}
+
+class _Page5State extends State<Page5> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 71, 96, 101),
+        automaticallyImplyLeading: false,
+      ),
+      body: const Center(
+        child: Text("Page5"),
+      ),
+    );
+  }
+}
